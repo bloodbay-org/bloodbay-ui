@@ -2,7 +2,7 @@
 
 ARG PORT=8080
 
-FROM node:12 as builder
+FROM node:14 as builder
 
 WORKDIR /react-ui
 
