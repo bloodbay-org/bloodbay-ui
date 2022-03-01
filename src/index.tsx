@@ -1,15 +1,66 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Navigate,
+    useLocation
+} from "react-router-dom";
+import {store} from './store/store'
+import {Provider} from 'react-redux'
+import {Layout} from 'antd';
+
+
 import './index.css';
-import App from './App';
+import App from './pages/App';
 import reportWebVitals from './reportWebVitals';
+import Login from "./pages/Login";
+import 'antd/dist/antd.css';
+import {AppHeader} from "./components/AppHeader";
+import {AppSetup} from "./components/AppSetup";
+import Cookies from "js-cookie";
+import {Account} from "./pages/Account";
+
+const {Content, Footer} = Layout;
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Layout style={{height: '100vh'}}>
+        <Provider store={store}>
+            <BrowserRouter>
+                <AppSetup/>
+                <AppHeader/>
+                <Content style={{padding: '50px 50px'}}>
+                    <Routes>
+                        <Route path="/" element={<App/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route
+                            path="/account"
+                            element={
+                                <RequireAuth>
+                                    <Account/>
+                                </RequireAuth>
+                            }
+                        />
+                        <Route path="*" element={<App/>}/>
+                    </Routes>
+                </Content>
+                <Footer style={{textAlign: 'center'}}>Nick Shulhin</Footer>
+            </BrowserRouter>
+        </Provider>
+    </Layout>,
+    document.getElementById('root')
 );
+
+function RequireAuth({children}: { children: JSX.Element }) {
+    let location = useLocation();
+
+    if (!Cookies.get('token')) {
+        return <Navigate to="/login" state={{from: location}} replace/>;
+    }
+
+    return children;
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
