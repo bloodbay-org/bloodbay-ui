@@ -37,7 +37,7 @@ export function Account() {
                 </Descriptions>
             </Card>
             <div style={{ marginTop: 10}}>
-                <CasesTable cases={cases.cases} inProgress={cases.inProgress} error={cases.error}/>
+                <CasesTable cases={cases.casesOfUser} inProgress={cases.inProgress} error={cases.error}/>
             </div>
         </div>
     );

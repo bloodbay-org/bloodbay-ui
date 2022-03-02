@@ -195,6 +195,7 @@ export const caseSlice = createSlice({
         createCaseCases(builder)
         getCaseByIdCases(builder)
         getAllCasesCases(builder)
+        getAllCasesForUserIdCases(builder)
     },
 })
 
