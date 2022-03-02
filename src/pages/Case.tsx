@@ -1,4 +1,4 @@
-import {Spin, Card, Descriptions} from 'antd';
+import {Spin, Card, Descriptions, Alert} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/store";
 import {useEffect} from "react";
@@ -21,6 +21,9 @@ export function Case() {
 
     return (
         <div>
+            {
+                cases.error &&  <Alert closable message={cases.error} type="error" />
+            }
             <Spin spinning={cases.inProgress}>
                 <Card>
                     <Descriptions column={1} title="Case info">

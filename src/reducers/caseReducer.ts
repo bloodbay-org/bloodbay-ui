@@ -1,5 +1,11 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-import {createCaseAction, deleteCaseAction, getAllCasesAction, getCaseByIdAction} from "../services/caseService";
+import {
+    createCaseAction,
+    deleteCaseAction,
+    getAllCasesAction,
+    getAllCasesForUserIdAction,
+    getCaseByIdAction
+} from "../services/caseService";
 
 export interface CaseType {
     title: string;
@@ -11,6 +17,7 @@ export interface CaseType {
 export interface CaseState {
     inProgress: boolean
     cases: CaseType[]
+    casesOfUser: CaseType[]
     viewingCase: CaseType
     error: any
 }
@@ -25,6 +32,10 @@ export interface GetCaseByIdActionParams {
     caseId: string;
 }
 
+export interface GetCasesForUserIdActionParams {
+    userId: string;
+}
+
 export interface DeleteCaseByIdActionParams {
     caseId: string;
     token: string;
@@ -33,6 +44,7 @@ export interface DeleteCaseByIdActionParams {
 const initialState: CaseState = {
     inProgress: false,
     cases: [],
+    casesOfUser: [],
     viewingCase: {
         title: '',
         description: '',
@@ -48,6 +60,17 @@ export const createCase = createAsyncThunk(
         const {title, description, token} = params
         try {
             return (await createCaseAction(title, description, token)).data
+        } catch (error: any) {
+            throw new Error(error.response.data.error ? error.response.data.error : error)
+        }
+    })
+
+export const getAllCasesForUserId = createAsyncThunk(
+    'cases/get?userId=',
+    async (params: GetCasesForUserIdActionParams) => {
+        const {userId} = params
+        try {
+            return (await getAllCasesForUserIdAction(userId)).data
         } catch (error: any) {
             throw new Error(error.response.data.error ? error.response.data.error : error)
         }
@@ -126,6 +149,22 @@ const getAllCasesCases = (builder: any) => {
         state.cases = action.payload
     })
     builder.addCase(getAllCases.rejected, (state: CaseState, action: any) => {
+        state.error = action.error.message
+        state.inProgress = false
+    })
+}
+
+const getAllCasesForUserIdCases = (builder: any) => {
+    builder.addCase(getAllCasesForUserId.pending, (state: CaseState) => {
+        state.error = ''
+        state.inProgress = true
+    })
+    builder.addCase(getAllCasesForUserId.fulfilled, (state: CaseState, action: any) => {
+        state.error = ''
+        state.inProgress = false
+        state.casesOfUser = action.payload
+    })
+    builder.addCase(getAllCasesForUserId.rejected, (state: CaseState, action: any) => {
         state.error = action.error.message
         state.inProgress = false
     })

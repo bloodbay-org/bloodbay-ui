@@ -9,6 +9,14 @@ export const createCaseAction = (title: string, description: string, token: stri
     })
 }
 
+export const getAllCasesForUserIdAction = (userId: string): Promise<any> => {
+    return axios.get(`${getAPIUrl()}/cases`, {
+        params: {
+            userId
+        }
+    })
+}
+
 export const getAllCasesAction = (): Promise<any> => {
     return axios.get(`${getAPIUrl()}/cases/`)
 }
