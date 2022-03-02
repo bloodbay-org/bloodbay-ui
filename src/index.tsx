@@ -22,6 +22,7 @@ import {AppSetup} from "./components/AppSetup";
 import Cookies from "js-cookie";
 import {Account} from "./pages/Account";
 import {ReportCase} from "./pages/ReportCase";
+import {Case} from "./pages/Case";
 
 const {Content, Footer} = Layout;
 
@@ -35,6 +36,7 @@ ReactDOM.render(
                     <Routes>
                         <Route path="/" element={<App/>}/>
                         <Route path="/login" element={<Login/>}/>
+                        <Route path="/case/:caseId" element={<Case/>}/>
                         <Route
                             path="/account"
                             element={

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import loginReducer from '../reducers/loginReducer'
+import caseReducer from '../reducers/caseReducer'
 
 export const store = configureStore({
     reducer: {
-        loginReducer
+        loginReducer,
+        caseReducer
     },
 })
 
