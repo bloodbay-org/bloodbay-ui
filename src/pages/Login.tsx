@@ -13,7 +13,12 @@ const {Meta} = Card;
 function Login() {
     const auth = useSelector((state: RootState) => state.loginReducer)
     const dispatch = useDispatch()
+
     const [registerMode, setRegisterMode] = useState(false)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('')
+
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -23,6 +28,11 @@ function Login() {
         }
     }, [auth])
 
+    const eraseFields = () => {
+        setEmail('')
+        setPassword('')
+        setUsername('')
+    }
 
     const LoginComponent = () => {
         return (
@@ -32,17 +42,20 @@ function Login() {
                 <Meta title="Login"/>
                 <Space direction="vertical">
                     <Input
+                        type="email"
+                        onChange={(event) => setEmail(event.target.value)}
                         style={{width: 300, marginTop: 20}}
                         placeholder="email"
                     />
                     <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'end'}}>
                         <Input.Group compact>
                             <Input.Password
+                                onChange={(event) => setPassword(event.target.value)}
                                 style={{width: 230}}
                                 placeholder="password"/>
                             <Button
                                 aria-label="Increment value"
-                                onClick={() => dispatch(login({email: 'mshulhin@gmail.com', password: 'testing123'}))}
+                                onClick={() => dispatch(login({email, password}))}
                             >Login
                             </Button>
                         </Input.Group>
@@ -51,7 +64,10 @@ function Login() {
                 <Button
                     type="primary"
                     style={{width: '100%', marginTop: 10}}
-                    onClick={() => setRegisterMode(true)}
+                    onClick={() => {
+                        eraseFields()
+                        setRegisterMode(true)
+                    }}
                 >No account? Register
                 </Button>
             </Card>
@@ -64,26 +80,38 @@ function Login() {
                 <Meta title="Register"/>
                 <Space direction="vertical">
                     <Input
+                        type="email"
+                        onChange={(event) => setEmail(event.target.value)}
                         style={{width: 300, marginTop: 20}}
                         placeholder="email"
                     />
                     <Input
+                        onChange={(event) => setUsername(event.target.value)}
                         style={{width: 300}}
                         placeholder="username"
                     />
                     <Input.Password
+                        onChange={(event) => setPassword(event.target.value)}
                         style={{width: 300}}
                         placeholder="password"/>
-                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'end'}}>
+                    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'end'}}>
                         <Button
                             type="primary"
                             style={{width: '100%', marginTop: 10}}
                             onClick={() => dispatch(register({
-                                email: 'mshulhin@gmail.com',
-                                password: 'testing123',
-                                username: 'nickshulhin'
+                                email,
+                                password,
+                                username
                             }))}
                         >Register
+                        </Button>
+                        <Button
+                            style={{width: '100%', marginTop: 10}}
+                            onClick={() => {
+                                eraseFields()
+                                setRegisterMode(false)
+                            }}
+                        >Back to login
                         </Button>
                     </div>
                 </Space>

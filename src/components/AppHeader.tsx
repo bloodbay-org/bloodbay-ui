@@ -16,9 +16,12 @@ export function AppHeader() {
         navigate("/account");
     }
 
-
     function goToHome() {
         navigate("/");
+    }
+
+    function goToReportCase() {
+        navigate("/report_case");
     }
 
     return (<PageHeader
@@ -26,8 +29,9 @@ export function AppHeader() {
         subTitle = "Beta"
         extra = {
             [
-                <Button key = "2" onClick={goToHome}>Home</Button>,
-                !auth.isLoggedIn ? <Button type="primary" key = "1" onClick={goToLogin}>Login</Button> : <Button type="primary" key = "1" onClick={goToAccount}>Hey, {auth.username}!</Button>,
+                <Button key = "4" onClick={goToHome}>Home</Button>,
+                <Button key = "2" onClick={goToReportCase}>Report Case</Button>,
+                !auth.isLoggedIn ? <Button type="primary" key = "3" onClick={goToLogin}>Login</Button> : <Button type="primary" key = "1" onClick={goToAccount}>Hey, {auth.username}!</Button>,
             ]
         }
     />)

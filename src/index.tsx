@@ -21,6 +21,7 @@ import {AppHeader} from "./components/AppHeader";
 import {AppSetup} from "./components/AppSetup";
 import Cookies from "js-cookie";
 import {Account} from "./pages/Account";
+import {ReportCase} from "./pages/ReportCase";
 
 const {Content, Footer} = Layout;
 
@@ -39,6 +40,14 @@ ReactDOM.render(
                             element={
                                 <RequireAuth>
                                     <Account/>
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="/report_case"
+                            element={
+                                <RequireAuth>
+                                    <ReportCase/>
                                 </RequireAuth>
                             }
                         />

@@ -1,10 +1,13 @@
 import {setLoginState, info} from '../reducers/loginReducer'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import Cookies from "js-cookie";
 import {useEffect} from "react";
+import {Alert} from "antd";
+import {RootState} from "../store/store";
 
 export function AppSetup() {
     const dispatch = useDispatch()
+    const auth = useSelector((state: RootState) => state.loginReducer)
 
     useEffect(() => {
         dispatch(setLoginState(!!Cookies.get('token')))
@@ -13,5 +16,9 @@ export function AppSetup() {
         }
     }, [])
 
-    return (<></>)
+    return (<>
+        {
+            auth.error &&  <Alert closable message={auth.error} type="error" />
+        }
+    </>)
 }
