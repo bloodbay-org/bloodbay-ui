@@ -31,7 +31,7 @@ export function Account() {
                 <Descriptions column={2} title="User Info">
                     <Descriptions.Item label="Username">{auth.username}</Descriptions.Item>
                     <Descriptions.Item label="Email">{auth.email}</Descriptions.Item>
-                    <Descriptions.Item label="Cases reported">{cases.cases.length}</Descriptions.Item>
+                    <Descriptions.Item label="Cases reported">{cases.casesOfUser.length}</Descriptions.Item>
                     <Descriptions.Item>{}</Descriptions.Item>
                     <Descriptions.Item label=""><Button type="primary" key="1" onClick={logout}>Logout</Button></Descriptions.Item>
                 </Descriptions>
