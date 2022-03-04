@@ -32,7 +32,7 @@ export function Case() {
                         <Descriptions.Item label="Reported by">
                             <Tag color="#87d068">{cases.viewingCase.reportedByName}</Tag>
                             </Descriptions.Item>
-                        <Descriptions.Item label="Tags">{cases.viewingCase.tags.map((tag, index) => <Tag key={index}>{tag}</Tag>)}</Descriptions.Item>
+                        <Descriptions.Item label="Tags">{cases.viewingCase.tags ? cases.viewingCase.tags.map((tag, index) => <Tag key={index}>{tag}</Tag>) : <div/>}</Descriptions.Item>
                     </Descriptions>
                 </Card>
             </Spin>
