@@ -83,8 +83,8 @@ const infoCases = (builder: any) => {
     builder.addCase(info.rejected, (state: AuthState, action: any) => {
         state.error = action.error.message
         state.inProgress = false
-        Cookies.remove('token')
         state.isLoggedIn = false
+        Cookies.remove('token')
     })
 }
 
@@ -93,6 +93,7 @@ const registerCases = (builder: any) => {
         state.error = ''
         state.inProgress = true
         state.isLoggedIn = false
+        Cookies.remove('token')
     })
     builder.addCase(register.fulfilled, (state: AuthState, action: any) => {
         state.error = ''
@@ -113,17 +114,19 @@ const loginCases = (builder: any) => {
         state.error = ''
         state.inProgress = true
         state.isLoggedIn = false
+        Cookies.remove('token')
     })
     builder.addCase(login.fulfilled, (state: AuthState, action: any) => {
         state.error = ''
         state.inProgress = false
-        Cookies.set('token', action.payload)
         state.isLoggedIn = true
+        Cookies.set('token', action.payload)
     })
     builder.addCase(login.rejected, (state: AuthState, action: any) => {
         state.error = action.error.message
         state.inProgress = false
         state.isLoggedIn = false
+        Cookies.remove('token')
     })
 }
 

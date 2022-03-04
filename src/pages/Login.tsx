@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {info, login, register} from '../reducers/loginReducer'
-import {Card, Input, Space, Button, Spin} from 'antd';
+import {Card, Input, Space, Button, Spin, Tooltip, Alert} from 'antd';
 import {
     useNavigate
 } from "react-router-dom";
 import {RootState} from "../store/store";
 import Cookies from "js-cookie";
+import {generatePassword} from "../utils/passwordUtils";
+import { CopyOutlined } from '@ant-design/icons';
 
 const {Meta} = Card;
 
@@ -17,6 +19,7 @@ function Login() {
     const [registerMode, setRegisterMode] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [passwordSuggestion, setPasswordSuggestion] = useState('')
     const [username, setUsername] = useState('')
 
     let navigate = useNavigate();
@@ -94,7 +97,24 @@ function Login() {
                         onChange={(event) => setPassword(event.target.value)}
                         style={{width: 300}}
                         placeholder="password"/>
+                    {
+                        passwordSuggestion && <Input.Group compact>
+                            <Input
+                                value={passwordSuggestion}
+                                style={{ width: 265 }}
+                                placeholder="suggested password"/>
+                            <Tooltip title="Copy to clickboard">
+                                <Button icon={<CopyOutlined />} onClick={() => navigator.clipboard.writeText(passwordSuggestion)} />
+                            </Tooltip>
+                        </Input.Group>
+                    }
                     <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'end'}}>
+                        <Button
+                            type="primary"
+                            style={{width: '100%', marginTop: 10}}
+                            onClick={() => setPasswordSuggestion(generatePassword())}
+                        >Generate password
+                        </Button>
                         <Button
                             type="primary"
                             style={{width: '100%', marginTop: 10}}
@@ -114,6 +134,8 @@ function Login() {
                         >Back to login
                         </Button>
                     </div>
+                    <Alert message="Please make sure to save your password because recovery functionality is not ready yet. If by any chance you lose it - please send me a message at mshulhin@gmail.com and I'll restore it for you." type="warning" />
+
                 </Space>
             </Card>
         )

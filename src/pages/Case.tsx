@@ -1,4 +1,4 @@
-import {Spin, Card, Descriptions, Alert} from 'antd';
+import {Spin, Card, Descriptions, Alert, Tag} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/store";
 import {useEffect} from "react";
@@ -29,6 +29,10 @@ export function Case() {
                     <Descriptions column={1} title="Case info">
                         <Descriptions.Item label="Title">{cases.viewingCase.title}</Descriptions.Item>
                         <Descriptions.Item label="Description">{cases.viewingCase.description}</Descriptions.Item>
+                        <Descriptions.Item label="Reported by">
+                            <Tag color="#87d068">{cases.viewingCase.reportedByName}</Tag>
+                            </Descriptions.Item>
+                        <Descriptions.Item label="Tags">{cases.viewingCase.tags.map((tag, index) => <Tag key={index}>{tag}</Tag>)}</Descriptions.Item>
                     </Descriptions>
                 </Card>
             </Spin>

@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import {Alert, Spin, Table} from 'antd';
-import {CaseType, getAllCases} from "../reducers/caseReducer";
+import {getAllCases} from "../reducers/caseReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/store";
 import {CasesTable} from "../components/CasesTable";

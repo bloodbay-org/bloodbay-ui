@@ -23,6 +23,9 @@ import Cookies from "js-cookie";
 import {Account} from "./pages/Account";
 import {ReportCase} from "./pages/ReportCase";
 import {Case} from "./pages/Case";
+import {LeftMenu} from "./components/LeftMenu";
+import Sider from "antd/es/layout/Sider";
+import Title from "antd/es/typography/Title";
 
 const {Content, Footer} = Layout;
 
@@ -30,33 +33,54 @@ ReactDOM.render(
     <Layout style={{height: '100vh'}}>
         <Provider store={store}>
             <BrowserRouter>
-                <AppSetup/>
-                <AppHeader/>
-                <Content style={{padding: '50px 50px'}}>
-                    <Routes>
-                        <Route path="/" element={<App/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/case/:caseId" element={<Case/>}/>
-                        <Route
-                            path="/account"
-                            element={
-                                <RequireAuth>
-                                    <Account/>
-                                </RequireAuth>
-                            }
-                        />
-                        <Route
-                            path="/report_case"
-                            element={
-                                <RequireAuth>
-                                    <ReportCase/>
-                                </RequireAuth>
-                            }
-                        />
-                        <Route path="*" element={<App/>}/>
-                    </Routes>
-                </Content>
-                <Footer style={{textAlign: 'center'}}>Nick Shulhin</Footer>
+
+                <Sider
+                    theme="dark"
+                    breakpoint="lg"
+                    collapsedWidth="0"
+                    onBreakpoint={broken => {
+                        console.log(broken);
+                    }}
+                    onCollapse={(collapsed, type) => {
+                        console.log(collapsed, type);
+                    }}
+                >
+                    <div className="logo">
+                        <Title level={3} style={{color: 'white'}}>BloodBay.org</Title>
+                    </div>
+                    <LeftMenu/>
+                </Sider>
+                <Layout>
+
+                    <AppHeader/>
+
+                    <AppSetup/>
+                    <Content style={{padding: '50px 50px'}}>
+                        <Routes>
+                            <Route path="/" element={<App/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/case/:caseId" element={<Case/>}/>
+                            <Route
+                                path="/account"
+                                element={
+                                    <RequireAuth>
+                                        <Account/>
+                                    </RequireAuth>
+                                }
+                            />
+                            <Route
+                                path="/report_case"
+                                element={
+                                    <RequireAuth>
+                                        <ReportCase/>
+                                    </RequireAuth>
+                                }
+                            />
+                            <Route path="*" element={<App/>}/>
+                        </Routes>
+                    </Content>
+                    <Footer style={{textAlign: 'center'}}>Nick Shulhin</Footer>
+                </Layout>
             </BrowserRouter>
         </Provider>
     </Layout>,

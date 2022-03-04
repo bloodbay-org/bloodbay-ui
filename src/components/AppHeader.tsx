@@ -1,8 +1,10 @@
-import {Button, PageHeader} from "antd";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import {Button} from "antd";
+import {useNavigate} from "react-router-dom";
 import {useSelector} from 'react-redux'
 import {RootState} from "../store/store";
+import {Header} from "antd/es/layout/layout";
+import React from "react";
+
 
 export function AppHeader() {
     const navigate = useNavigate();
@@ -16,23 +18,15 @@ export function AppHeader() {
         navigate("/account");
     }
 
-    function goToHome() {
-        navigate("/");
-    }
+    return (
 
-    function goToReportCase() {
-        navigate("/report_case");
-    }
-
-    return (<PageHeader
-        title = "BloodBay"
-        subTitle = "Beta"
-        extra = {
-            [
-                <Button key = "4" onClick={goToHome}>Home</Button>,
-                <Button key = "2" onClick={goToReportCase}>Report Case</Button>,
-                !auth.isLoggedIn ? <Button type="primary" key = "3" onClick={goToLogin}>Login</Button> : <Button type="primary" key = "1" onClick={goToAccount}>Hey, {auth.username}!</Button>,
-            ]
-        }
-    />)
+        <Header style={{padding: 0, display: 'flex', justifyContent: 'flex-end'}}>
+            <div style={{ paddingRight: 30}}>
+                {
+                    !auth.isLoggedIn ? <Button type="primary" key="3" onClick={goToLogin}>Login</Button> :
+                        <Button type="primary" key="1" onClick={goToAccount}>Hey, {auth.username}!</Button>
+                }
+            </div>
+        </Header>
+    )
 }

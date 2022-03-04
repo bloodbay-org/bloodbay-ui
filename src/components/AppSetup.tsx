@@ -8,6 +8,7 @@ import {RootState} from "../store/store";
 export function AppSetup() {
     const dispatch = useDispatch()
     const auth = useSelector((state: RootState) => state.loginReducer)
+    const cases = useSelector((state: RootState) => state.caseReducer)
 
     useEffect(() => {
         dispatch(setLoginState(!!Cookies.get('token')))
@@ -18,7 +19,14 @@ export function AppSetup() {
 
     return (<>
         {
-            auth.error &&  <Alert closable message={auth.error} type="error" />
+            <>
+                {
+                    auth.error &&  <Alert closable message={auth.error} type="error" />
+                }
+                {
+                    cases.error &&  <Alert closable message={cases.error} type="error" />
+                }
+            </>
         }
     </>)
 }

@@ -1,4 +1,4 @@
-import {Button, Descriptions, Card, Typography} from "antd";
+import {Button, Descriptions, Card} from "antd";
 import React, {useEffect} from "react";
 import {logOut} from "../reducers/loginReducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -6,7 +6,6 @@ import {useNavigate} from "react-router-dom";
 import {RootState} from "../store/store";
 import {getAllCasesForUserId} from "../reducers/caseReducer";
 import {CasesTable} from "../components/CasesTable";
-const { Title } = Typography;
 
 export function Account() {
     const navigate = useNavigate();

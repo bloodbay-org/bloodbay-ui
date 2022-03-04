@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Spin, Table} from 'antd';
+import {Alert, Spin, Table, Tag} from 'antd';
 import {CaseType} from "../reducers/caseReducer";
 
 export interface CasesTableProps {
@@ -16,7 +16,19 @@ export function CasesTable(props: CasesTableProps) {
             dataIndex: 'title',
             key: 'title',
             render: (text: string, record: CaseType) => <a href={`/case/${record._id}`}>{text}</a>,
-        }
+        },
+        {
+            title: 'Tags',
+            dataIndex: 'tags',
+            key: 'tags',
+            render: (tags: string[]) => tags.map((tag, index) => <Tag key={index}>{tag}</Tag>),
+        },
+        {
+            title: 'Reported by',
+            dataIndex: 'reportedByName',
+            key: 'reportedByName',
+            render: (text: string) => <span>{text}</span>,
+        },
     ]
 
     return (

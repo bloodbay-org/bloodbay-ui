@@ -8,9 +8,11 @@ import {
 } from "../services/caseService";
 
 export interface CaseType {
+    reportedByName: string;
     title: string;
     description: string;
     reportedBy: string;
+    tags: string[];
     _id: string;
 }
 
@@ -19,6 +21,7 @@ export interface CaseState {
     cases: CaseType[]
     casesOfUser: CaseType[]
     viewingCase: CaseType
+    createdCase: CaseType
     error: any
 }
 
@@ -26,6 +29,8 @@ export interface CreateCaseActionParams {
     title: string;
     description: string;
     token: string;
+    reportedByName: string;
+    tags: string[];
 }
 
 export interface GetCaseByIdActionParams {
@@ -41,25 +46,30 @@ export interface DeleteCaseByIdActionParams {
     token: string;
 }
 
+const defaultCaseTemplate = {
+    title: '',
+    description: '',
+    reportedBy: '',
+    reportedByName: '',
+    tags: [],
+    _id: '',
+}
+
 const initialState: CaseState = {
     inProgress: false,
     cases: [],
     casesOfUser: [],
-    viewingCase: {
-        title: '',
-        description: '',
-        reportedBy: '',
-        _id: '',
-    },
+    viewingCase: defaultCaseTemplate,
+    createdCase: defaultCaseTemplate,
     error: ''
 }
 
 export const createCase = createAsyncThunk(
     'cases/create',
     async (params: CreateCaseActionParams) => {
-        const {title, description, token} = params
+        const {title, description, token, reportedByName, tags} = params
         try {
-            return (await createCaseAction(title, description, token)).data
+            return (await createCaseAction(title, description, tags, reportedByName, token)).data
         } catch (error: any) {
             throw new Error(error.response.data.error ? error.response.data.error : error)
         }
@@ -127,10 +137,12 @@ const createCaseCases = (builder: any) => {
     builder.addCase(createCase.pending, (state: CaseState) => {
         state.error = ''
         state.inProgress = true
+        state.createdCase = defaultCaseTemplate
     })
-    builder.addCase(createCase.fulfilled, (state: CaseState) => {
+    builder.addCase(createCase.fulfilled, (state: CaseState, action: any) => {
         state.error = ''
         state.inProgress = false
+        state.createdCase = action.payload
     })
     builder.addCase(createCase.rejected, (state: CaseState, action: any) => {
         state.error = action.error.message
@@ -174,6 +186,7 @@ const getCaseByIdCases = (builder: any) => {
     builder.addCase(getCaseById.pending, (state: CaseState) => {
         state.error = ''
         state.inProgress = true
+        state.viewingCase = defaultCaseTemplate
     })
     builder.addCase(getCaseById.fulfilled, (state: CaseState, action: any) => {
         state.error = ''
