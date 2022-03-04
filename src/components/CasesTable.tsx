@@ -21,7 +21,7 @@ export function CasesTable(props: CasesTableProps) {
             title: 'Tags',
             dataIndex: 'tags',
             key: 'tags',
-            render: (tags: string[]) => tags.map((tag, index) => <Tag key={index}>{tag}</Tag>),
+            render: (tags: string[]) => tags ? tags.map((tag, index) => <Tag key={index}>{tag}</Tag>) : <div/>,
         },
         {
             title: 'Reported by',
