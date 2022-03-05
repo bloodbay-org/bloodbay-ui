@@ -45,8 +45,9 @@ ReactDOM.render(
                         console.log(collapsed, type);
                     }}
                 >
-                    <div className="logo">
+                    <div style={{ width: 32, height: 64, display: 'flex', padding: 5}}>
                         <Title level={3} style={{color: 'white'}}>BloodBay.org</Title>
+                        <img style={{ width: 50, height: 50}} src='/syringe_white.png' />
                     </div>
                     <LeftMenu/>
                 </Sider>
