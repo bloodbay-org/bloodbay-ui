@@ -2,7 +2,7 @@ import {Form, Button, Input, Spin, Tag, Alert} from 'antd';
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/store";
-import {createCase} from "../reducers/caseReducer";
+import {createCase, resetCreatedStateCase} from "../reducers/caseReducer";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 import {ResultComponent} from "../components/ResultComponent";
@@ -20,6 +20,10 @@ export function ReportCase() {
     const [description, setDescription] = useState('')
     const [showSuccess, setShowSuccess] = useState(false)
 
+    useEffect(() => {
+        dispatch(resetCreatedStateCase())
+    }, [])
+
     const processTags = (value: string) => {
         setTags(value.split(',').filter(tag => tag && tag !== ' ').map(tag => tag.trim()))
     }
@@ -27,7 +31,6 @@ export function ReportCase() {
     const onFinish = () => {
         dispatch(createCase({title, description, tags, reportedByName, token: `${Cookies.get('token')}`}))
     }
-
 
     useEffect(() => {
         if (cases.createdCase._id) {
@@ -37,7 +40,10 @@ export function ReportCase() {
 
     const ReportCreatedSuccessActions = () => {
         return (
-            <Button type="primary" key="goToCase" onClick={() => navigate(`/case/${cases.createdCase._id}`)}>
+            <Button type="primary" key="goToCase" onClick={() => {
+                navigate(`/case/${cases.createdCase._id}`)
+                dispatch(resetCreatedStateCase())
+            }}>
                 View my case
             </Button>
         )

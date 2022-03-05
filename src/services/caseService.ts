@@ -17,6 +17,14 @@ export const getAllCasesForUserIdAction = (userId: string): Promise<any> => {
     })
 }
 
+export const searchCasesAction = (tag: string): Promise<any> => {
+    return axios.get(`${getAPIUrl()}/cases/search`, {
+        params: {
+            tag
+        }
+    })
+}
+
 export const getAllCasesAction = (): Promise<any> => {
     return axios.get(`${getAPIUrl()}/cases/`)
 }

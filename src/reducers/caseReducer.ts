@@ -4,7 +4,7 @@ import {
     deleteCaseAction,
     getAllCasesAction,
     getAllCasesForUserIdAction,
-    getCaseByIdAction
+    getCaseByIdAction, searchCasesAction
 } from "../services/caseService";
 
 export interface CaseType {
@@ -35,6 +35,10 @@ export interface CreateCaseActionParams {
 
 export interface GetCaseByIdActionParams {
     caseId: string;
+}
+
+export interface SearchCasesActionParams {
+    tag: string;
 }
 
 export interface GetCasesForUserIdActionParams {
@@ -70,6 +74,17 @@ export const createCase = createAsyncThunk(
         const {title, description, token, reportedByName, tags} = params
         try {
             return (await createCaseAction(title, description, tags, reportedByName, token)).data
+        } catch (error: any) {
+            throw new Error(error.response.data.error ? error.response.data.error : error)
+        }
+    })
+
+export const searchCases = createAsyncThunk(
+    'cases/search?tag=',
+    async (params: SearchCasesActionParams) => {
+        const {tag} = params
+        try {
+            return (await searchCasesAction(tag)).data
         } catch (error: any) {
             throw new Error(error.response.data.error ? error.response.data.error : error)
         }
@@ -150,6 +165,22 @@ const createCaseCases = (builder: any) => {
     })
 }
 
+const searchCasesCases = (builder: any) => {
+    builder.addCase(searchCases.pending, (state: CaseState) => {
+        state.error = ''
+        state.inProgress = true
+    })
+    builder.addCase(searchCases.fulfilled, (state: CaseState, action: any) => {
+        state.error = ''
+        state.inProgress = false
+        state.cases = action.payload
+    })
+    builder.addCase(searchCases.rejected, (state: CaseState, action: any) => {
+        state.error = action.error.message
+        state.inProgress = false
+    })
+}
+
 const getAllCasesCases = (builder: any) => {
     builder.addCase(getAllCases.pending, (state: CaseState) => {
         state.error = ''
@@ -202,14 +233,22 @@ const getCaseByIdCases = (builder: any) => {
 export const caseSlice = createSlice({
     name: 'case',
     initialState,
-    reducers: {},
+    reducers: {
+        resetCreatedStateCase: (state) => {
+            state.error = ''
+            state.inProgress = false
+            state.createdCase = defaultCaseTemplate
+        },
+    },
     extraReducers: (builder) => {
         deleteCaseCases(builder)
         createCaseCases(builder)
         getCaseByIdCases(builder)
         getAllCasesCases(builder)
         getAllCasesForUserIdCases(builder)
+        searchCasesCases(builder)
     },
 })
 
+export const {resetCreatedStateCase} = caseSlice.actions
 export default caseSlice.reducer

@@ -30,7 +30,7 @@ import Title from "antd/es/typography/Title";
 const {Content, Footer} = Layout;
 
 ReactDOM.render(
-    <Layout style={{height: '100vh'}}>
+    <Layout style={{height: '100vh', overflow: 'scroll'}}>
         <Provider store={store}>
             <BrowserRouter>
 
