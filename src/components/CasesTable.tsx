@@ -1,10 +1,9 @@
 import React from 'react';
-import {Alert, Spin, Table, Tag} from 'antd';
+import {Spin, Table, Tag} from 'antd';
 import {CaseType} from "../reducers/caseReducer";
 
 export interface CasesTableProps {
     cases: CaseType[],
-    error: string,
     inProgress: boolean,
 }
 
@@ -33,9 +32,6 @@ export function CasesTable(props: CasesTableProps) {
 
     return (
         <div>
-            {
-                props.error && <Alert closable message={props.error} type="error"/>
-            }
             <Spin spinning={props.inProgress}>
                 <Table columns={columns} dataSource={props.cases}/>
             </Spin>

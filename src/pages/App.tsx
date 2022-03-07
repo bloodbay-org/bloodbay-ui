@@ -31,7 +31,7 @@ function App() {
             </Card>
             <Search placeholder="Search cases by tag" loading={cases.inProgress} style={{paddingBottom: 5, paddingTop: 5}} enterButton
                     onSearch={(value: string) => dispatch(searchCases({tag: value}))}/>
-            <CasesTable cases={cases.cases} inProgress={cases.inProgress} error={cases.error}/>
+            <CasesTable cases={cases.cases} inProgress={cases.inProgress} />
         </div>
     );
 }

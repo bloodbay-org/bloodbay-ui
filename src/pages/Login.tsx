@@ -134,8 +134,7 @@ function Login() {
                         >Back to login
                         </Button>
                     </div>
-                    <Alert message="Please make sure to save your password because recovery functionality is not ready yet. If by any chance you lose it - please send me a message at mshulhin@gmail.com and I'll restore it for you." type="warning" />
-
+                    <Alert message="Please do not use any of your existing passwords. Strongly recommended to use password generator above to avoid any consequences of potential data breach." type="warning" />
                 </Space>
             </Card>
         )

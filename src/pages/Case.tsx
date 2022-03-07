@@ -21,9 +21,6 @@ export function Case() {
 
     return (
         <div>
-            {
-                cases.error &&  <Alert closable message={cases.error} type="error" />
-            }
             <Spin spinning={cases.inProgress}>
                 <Card>
                     <Descriptions column={1} title="Case info">

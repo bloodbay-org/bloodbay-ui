@@ -30,7 +30,7 @@ import Title from "antd/es/typography/Title";
 const {Content, Footer} = Layout;
 
 ReactDOM.render(
-    <Layout style={{height: '100vh', overflow: 'scroll'}}>
+    <Layout>
         <Provider store={store}>
             <BrowserRouter>
 
@@ -52,11 +52,9 @@ ReactDOM.render(
                     <LeftMenu/>
                 </Sider>
                 <Layout>
-
                     <AppHeader/>
-
                     <AppSetup/>
-                    <Content style={{padding: '50px 50px'}}>
+                    <Content style={{padding: '50px 50px', height: '100vh'}}>
                         <Routes>
                             <Route path="/" element={<App/>}/>
                             <Route path="/login" element={<Login/>}/>

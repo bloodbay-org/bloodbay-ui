@@ -9,6 +9,7 @@ export function AppSetup() {
     const dispatch = useDispatch()
     const auth = useSelector((state: RootState) => state.loginReducer)
     const cases = useSelector((state: RootState) => state.caseReducer)
+    const files = useSelector((state: RootState) => state.fileReducer)
 
     useEffect(() => {
         dispatch(setLoginState(!!Cookies.get('token')))
@@ -25,6 +26,9 @@ export function AppSetup() {
                 }
                 {
                     cases.error &&  <Alert closable message={cases.error} type="error" />
+                }
+                {
+                    files.error &&  <Alert closable message={cases.error} type="error" />
                 }
             </>
         }
