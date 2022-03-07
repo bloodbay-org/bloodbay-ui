@@ -8,7 +8,7 @@ import {
 import {RootState} from "../store/store";
 import Cookies from "js-cookie";
 import {generatePassword} from "../utils/passwordUtils";
-import { CopyOutlined } from '@ant-design/icons';
+import {CopyOutlined} from '@ant-design/icons';
 
 const {Meta} = Card;
 
@@ -101,10 +101,11 @@ function Login() {
                         passwordSuggestion && <Input.Group compact>
                             <Input
                                 value={passwordSuggestion}
-                                style={{ width: 265 }}
+                                style={{width: 265}}
                                 placeholder="suggested password"/>
                             <Tooltip title="Copy to clickboard">
-                                <Button icon={<CopyOutlined />} onClick={() => navigator.clipboard.writeText(passwordSuggestion)} />
+                                <Button icon={<CopyOutlined/>}
+                                        onClick={() => navigator.clipboard.writeText(passwordSuggestion)}/>
                             </Tooltip>
                         </Input.Group>
                     }
@@ -134,20 +135,24 @@ function Login() {
                         >Back to login
                         </Button>
                     </div>
-                    <Alert message="Please do not use any of your existing passwords. Strongly recommended to use password generator above to avoid any consequences of potential data breach." type="warning" />
+                    <Alert
+                        message="Please do not use any of your existing passwords. Strongly recommended to use password generator above to avoid any consequences of potential data breach."
+                        type="warning"/>
                 </Space>
             </Card>
         )
     }
 
     return (
-        <Spin spinning={auth.inProgress}>
-            <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                {
-                    !registerMode ? LoginComponent() : RegisterComponent()
-                }
-            </div>
-        </Spin>
+        <div style={{height: '100vh'}}>
+            <Spin spinning={auth.inProgress}>
+                <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                    {
+                        !registerMode ? LoginComponent() : RegisterComponent()
+                    }
+                </div>
+            </Spin>
+        </div>
     );
 }
 

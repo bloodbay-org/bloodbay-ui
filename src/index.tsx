@@ -54,7 +54,7 @@ ReactDOM.render(
                 <Layout>
                     <AppHeader/>
                     <AppSetup/>
-                    <Content style={{padding: '50px 50px', height: '100vh'}}>
+                    <Content style={{padding: '50px 50px', height: '100%'}}>
                         <Routes>
                             <Route path="/" element={<App/>}/>
                             <Route path="/login" element={<Login/>}/>

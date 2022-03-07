@@ -18,3 +18,11 @@ export const uploadFileAction = (files: File[], linkedToId: string, token: strin
     })
 }
 
+export const getLinkedFilesToCaseAction = (caseId: string): Promise<any> => {
+    return axios.get(`${getAPIUrl()}/files/`, {
+        params: {
+            caseId
+        }
+    })
+}
+
