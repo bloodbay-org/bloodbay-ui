@@ -39,7 +39,6 @@ ReactDOM.render(
                     breakpoint="lg"
                     collapsedWidth="0"
                     style={{
-                        overflow: 'auto',
                         left: 0,
                         top: 0,
                         bottom: 0,
