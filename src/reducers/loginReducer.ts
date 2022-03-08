@@ -1,11 +1,13 @@
 import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit'
 import Cookies from 'js-cookie'
 
-import {infoAction, loginAction, registerAction} from '../services/authService'
+import {infoAction, loginAction, registerAction, verifyEmailAction} from '../services/authService'
 
 export interface AuthState {
     inProgress: boolean
     isLoggedIn: boolean
+    verificationPending: boolean
+    emailVerified: boolean
     username: string
     email: string
     error: any
@@ -27,9 +29,15 @@ export interface InfoActionParams {
     token: string,
 }
 
+export interface VerifyEmailActionParams {
+    verificationToken: string,
+}
+
 const initialState: AuthState = {
     inProgress: false,
     isLoggedIn: false,
+    verificationPending: false,
+    emailVerified: false,
     username: '',
     email: '',
     id: '',
@@ -68,6 +76,37 @@ export const info = createAsyncThunk(
         }
     })
 
+export const verifyEmail = createAsyncThunk(
+    'verify/',
+    async (params: VerifyEmailActionParams) => {
+        const {verificationToken} = params
+        try {
+            return (await verifyEmailAction(verificationToken)).data
+        } catch (error: any) {
+            throw new Error(error.response.data.error ? error.response.data.error : error)
+        }
+    })
+
+const verifyEmailCases = (builder: any) => {
+    builder.addCase(verifyEmail.pending, (state: AuthState) => {
+        state.error = ''
+        state.inProgress = true
+        state.emailVerified = false
+        Cookies.remove('token')
+    })
+    builder.addCase(verifyEmail.fulfilled, (state: AuthState) => {
+        state.error = ''
+        state.inProgress = false
+        state.emailVerified = true
+    })
+    builder.addCase(verifyEmail.rejected, (state: AuthState, action: any) => {
+        state.error = action.error.message
+        state.inProgress = false
+        state.emailVerified = false
+        Cookies.remove('token')
+    })
+}
+
 const infoCases = (builder: any) => {
     builder.addCase(info.pending, (state: AuthState) => {
         state.error = ''
@@ -92,19 +131,19 @@ const registerCases = (builder: any) => {
     builder.addCase(register.pending, (state: AuthState) => {
         state.error = ''
         state.inProgress = true
-        state.isLoggedIn = false
+        state.verificationPending = false
         Cookies.remove('token')
     })
     builder.addCase(register.fulfilled, (state: AuthState, action: any) => {
         state.error = ''
         state.inProgress = false
-        state.isLoggedIn = true
+        state.verificationPending = true
         Cookies.set('token', action.payload)
     })
     builder.addCase(register.rejected, (state: AuthState, action: any) => {
         state.error = action.error.message
         state.inProgress = false
-        state.isLoggedIn = false
+        state.verificationPending = false
         Cookies.remove('token')
     })
 }
@@ -137,6 +176,7 @@ export const authSlice = createSlice({
         logOut: (state) => {
             state.inProgress = false
             state.isLoggedIn = false
+            state.verificationPending = false
             state.error = ''
             Cookies.remove('token')
         },
@@ -148,6 +188,7 @@ export const authSlice = createSlice({
         loginCases(builder)
         registerCases(builder)
         infoCases(builder)
+        verifyEmailCases(builder)
     },
 })
 

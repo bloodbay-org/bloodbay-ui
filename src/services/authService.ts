@@ -23,3 +23,11 @@ export const infoAction = (token: string): Promise<any> => {
         }
     })
 }
+
+export const verifyEmailAction = (verificationToken: string): Promise<any> => {
+    return axios.post(`${getAPIUrl()}/verify`, null,{
+        params: {
+            token: verificationToken
+        }
+    })
+}

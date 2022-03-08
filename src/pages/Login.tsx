@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
-import {info, login, register} from '../reducers/loginReducer'
+import {info, login, logOut, register} from '../reducers/loginReducer'
 import {Card, Input, Space, Button, Spin, Tooltip, Alert} from 'antd';
 import {
     useNavigate
@@ -9,6 +9,8 @@ import {RootState} from "../store/store";
 import Cookies from "js-cookie";
 import {generatePassword} from "../utils/passwordUtils";
 import {CopyOutlined} from '@ant-design/icons';
+import {ResultComponent} from "../components/ResultComponent";
+import {resetCreatedStateCase} from "../reducers/caseReducer";
 
 const {Meta} = Card;
 
@@ -21,6 +23,7 @@ function Login() {
     const [password, setPassword] = useState('')
     const [passwordSuggestion, setPasswordSuggestion] = useState('')
     const [username, setUsername] = useState('')
+    const [showVerificationPendingScreen, setShowVerificationPendingScreen] = useState(false)
 
     let navigate = useNavigate();
 
@@ -28,6 +31,9 @@ function Login() {
         if (auth.isLoggedIn) {
             dispatch(info({token: `${Cookies.get('token')}`}))
             navigate("/");
+        }
+        if (auth.verificationPending) {
+            setShowVerificationPendingScreen(true)
         }
     }, [auth])
 
@@ -77,8 +83,26 @@ function Login() {
         )
     }
 
+    const PendingVerificationActions = () => {
+        return (
+            <Button type="primary" key="goToHomePage" onClick={() => {
+                navigate(`/`)
+                dispatch(logOut())
+            }}>
+                Got it!
+            </Button>
+        )
+    }
+
     const RegisterComponent = () => {
         return (
+            showVerificationPendingScreen ?
+                <ResultComponent
+                    title={"Thanks for registration!"}
+                    subTitle={"Please check your email for verification link."}
+                    actions={[PendingVerificationActions()]}
+                    status={'success'}/>
+                :
             <Card style={{width: 340, alignSelf: 'center', display: 'flex', justifyContent: 'center'}}>
                 <Meta title="Register"/>
                 <Space direction="vertical">

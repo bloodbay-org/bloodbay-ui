@@ -27,6 +27,7 @@ import {LeftMenu} from "./components/LeftMenu";
 import Sider from "antd/es/layout/Sider";
 import Title from "antd/es/typography/Title";
 import {About} from "./pages/About";
+import {Verify} from "./pages/Verify";
 
 const {Content, Footer} = Layout;
 
@@ -56,6 +57,7 @@ ReactDOM.render(
                     <Content style={{padding: '50px 50px', height: 800, overflowY: 'scroll'}}>
                         <Routes>
                             <Route path="/" element={<App/>}/>
+                            <Route path="/verify/:verificationToken" element={<Verify/>}/>
                             <Route path="/login" element={<Login/>}/>
                             <Route path="/about" element={<About/>}/>
                             <Route path="/case/:caseId" element={<Case/>}/>
