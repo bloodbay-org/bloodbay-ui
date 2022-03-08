@@ -25,7 +25,7 @@ export const LeftMenu = () => {
             <Menu.Item key="4" onClick={() => goToExternalLink('https://github.com/bloodbay-org')} icon={<GithubOutlined />}>
                 Source Code
             </Menu.Item>
-            <Menu.Item key="5" onClick={() => goToExternalLink('https://github.com/orgs/bloodbay-org/projects/1')} icon={<GithubOutlined />}>
+            <Menu.Item key="5" onClick={() => goToExternalLink('https://github.com/orgs/bloodbay-org/projects/2/views/1')} icon={<GithubOutlined />}>
                 Project progress
             </Menu.Item>
         </Menu>
