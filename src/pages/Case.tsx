@@ -33,7 +33,7 @@ export function Case() {
 
 
     return (
-        <div>
+        <div style={{ height: '100%'}}>
             <Spin spinning={cases.inProgress || files.inProgress}>
                 <Card>
                     <Descriptions column={1} title="Case info">

@@ -150,7 +150,7 @@ export function ReportCase() {
     }
 
     return (
-        <div style={{height: '100vh'}}>
+        <div>
             <Spin spinning={cases.inProgress || files.inProgress}>
                 {
                     showSuccess ? <ResultComponent

@@ -144,7 +144,7 @@ function Login() {
     }
 
     return (
-        <div style={{height: '100vh'}}>
+        <div>
             <Spin spinning={auth.inProgress}>
                 <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                     {

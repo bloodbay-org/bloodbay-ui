@@ -26,6 +26,7 @@ import {Case} from "./pages/Case";
 import {LeftMenu} from "./components/LeftMenu";
 import Sider from "antd/es/layout/Sider";
 import Title from "antd/es/typography/Title";
+import {About} from "./pages/About";
 
 const {Content, Footer} = Layout;
 
@@ -33,31 +34,31 @@ ReactDOM.render(
     <Layout>
         <Provider store={store}>
             <BrowserRouter>
-
                 <Sider
                     theme="dark"
                     breakpoint="lg"
                     collapsedWidth="0"
-                    onBreakpoint={broken => {
-                        console.log(broken);
-                    }}
-                    onCollapse={(collapsed, type) => {
-                        console.log(collapsed, type);
+                    style={{
+                        overflow: 'auto',
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
                     }}
                 >
-                    <div style={{ width: 32, height: 64, display: 'flex', padding: 5}}>
-                        <Title level={3} style={{color: 'white'}}>BloodBay.org</Title>
-                        <img style={{ width: 50, height: 50}} src='/syringe_white.png' />
+                    <div style={{width: 32, height: 64, display: 'flex', padding: 5}}>
+                        <Title level={3} style={{color: 'white', paddingTop: 10}}>BloodBay.org</Title>
+                        <img style={{width: 50, height: 50}} src='/syringe_white.png'/>
                     </div>
                     <LeftMenu/>
                 </Sider>
                 <Layout>
                     <AppHeader/>
                     <AppSetup/>
-                    <Content style={{padding: '50px 50px', height: '100%'}}>
+                    <Content style={{padding: '50px 50px', height: 800, overflowY: 'scroll'}}>
                         <Routes>
                             <Route path="/" element={<App/>}/>
                             <Route path="/login" element={<Login/>}/>
+                            <Route path="/about" element={<About/>}/>
                             <Route path="/case/:caseId" element={<Case/>}/>
                             <Route
                                 path="/account"
