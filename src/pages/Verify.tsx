@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {Button, Card, Spin} from "antd";
 import {useNavigate, useParams} from "react-router-dom";
-import {getCaseById} from "../reducers/caseReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/store";
-import {logOut, verifyEmail} from "../reducers/loginReducer";
+import {verifyEmail} from "../reducers/loginReducer";
 import {ResultComponent} from "../components/ResultComponent";
 
 
