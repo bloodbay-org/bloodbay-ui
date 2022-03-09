@@ -1,4 +1,4 @@
-import {Spin, Card, Descriptions, Tag, Carousel, Button} from 'antd';
+import {Spin, Card, Descriptions, Tag, Button} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/store";
 import React, {useEffect} from "react";
@@ -8,6 +8,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Document, Page} from 'react-pdf';
 import {pdfjs} from 'react-pdf';
 import {ResultComponent} from "../components/ResultComponent";
+import {getCountryByCode} from "../utils/localityUtils";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
@@ -41,6 +42,7 @@ export function Case() {
                         <Descriptions column={1} title="Case info">
                             <Descriptions.Item label="Title">{cases.viewingCase.title}</Descriptions.Item>
                             <Descriptions.Item label="Description">{cases.viewingCase.description}</Descriptions.Item>
+                            <Descriptions.Item label="Country">{getCountryByCode(cases.viewingCase.country)}</Descriptions.Item>
                             <Descriptions.Item label="Reported by">
                                 <Tag color="#87d068">{cases.viewingCase.reportedByName}</Tag>
                             </Descriptions.Item>

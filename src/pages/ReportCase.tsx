@@ -1,4 +1,4 @@
-import {Form, Button, Input, Spin, Tag, Upload} from 'antd';
+import {Form, Button, Input, Spin, Tag, Upload, Select} from 'antd';
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/store";
@@ -8,7 +8,9 @@ import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 import {ResultComponent} from "../components/ResultComponent";
 import {UploadOutlined} from '@ant-design/icons';
+import {countryMap, getCountryByCode} from "../utils/localityUtils";
 
+const {Option} = Select;
 const {TextArea} = Input;
 
 export function ReportCase() {
@@ -19,6 +21,7 @@ export function ReportCase() {
 
     const [tags, setTags] = useState<string[]>([])
     const [title, setTitle] = useState('')
+    const [country, setCountry] = useState('')
     const [reportedByName, setReportedByName] = useState('')
     const [description, setDescription] = useState('')
     const [showSuccess, setShowSuccess] = useState(false)
@@ -34,7 +37,7 @@ export function ReportCase() {
     }
 
     const onFinish = () => {
-        dispatch(createCase({title, description, tags, reportedByName, token: `${Cookies.get('token')}`}))
+        dispatch(createCase({title, description, tags, reportedByName, country, token: `${Cookies.get('token')}`}))
     }
 
     useEffect(() => {
@@ -48,7 +51,11 @@ export function ReportCase() {
         if (cases.createdCase._id) {
             if (fileList.length > 0) {
                 // @ts-ignore
-                dispatch(uploadFile({files: fileList, linkedToId: cases.createdCase._id, token: `${Cookies.get('token')}`}))
+                dispatch(uploadFile({
+                    files: fileList,
+                    linkedToId: cases.createdCase._id,
+                    token: `${Cookies.get('token')}`
+                }))
             } else {
                 setShowSuccess(true)
                 setFileList([])
@@ -113,6 +120,19 @@ export function ReportCase() {
                     <Input
                         onChange={(event) => setReportedByName(event.target.value)}
                     />
+                </Form.Item>
+                <Form.Item
+                    rules={[{required: true}]}
+                    name="country"
+                    label="Country:"
+                    labelCol={{span: 6}}
+                    wrapperCol={{span: 16}}
+                >
+                    <Select onSelect={(event: string) => setCountry(event)}>
+                        {
+                            Object.keys(countryMap).map(countryKey => <Option value={countryKey}>{getCountryByCode(countryKey)}</Option>)
+                        }
+                    </Select>
                 </Form.Item>
                 <Form.Item
                     rules={[{required: true}]}

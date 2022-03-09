@@ -1,8 +1,8 @@
 import axios from 'axios'
 import {getAPIUrl} from "../utils/apiUtils";
 
-export const createCaseAction = (title: string, description: string, tags: string[], reportedByName: string,  token: string): Promise<any> => {
-    return axios.post(`${getAPIUrl()}/cases/`, {title, description, tags, reportedByName}, {
+export const createCaseAction = (title: string, description: string, tags: string[], reportedByName: string,  country: string, token: string): Promise<any> => {
+    return axios.post(`${getAPIUrl()}/cases/`, {title, description, tags, reportedByName, country}, {
         headers: {
             token
         }

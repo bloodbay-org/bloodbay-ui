@@ -12,6 +12,7 @@ export interface CaseType {
     title: string;
     description: string;
     reportedBy: string;
+    country: string;
     tags: string[];
     _id: string;
 }
@@ -30,6 +31,7 @@ export interface CreateCaseActionParams {
     description: string;
     token: string;
     reportedByName: string;
+    country: string;
     tags: string[];
 }
 
@@ -55,6 +57,7 @@ const defaultCaseTemplate = {
     description: '',
     reportedBy: '',
     reportedByName: '',
+    country: '',
     tags: [],
     _id: '',
 }
@@ -71,9 +74,9 @@ const initialState: CaseState = {
 export const createCase = createAsyncThunk(
     'cases/create',
     async (params: CreateCaseActionParams) => {
-        const {title, description, token, reportedByName, tags} = params
+        const {title, description, token, reportedByName, tags, country} = params
         try {
-            return (await createCaseAction(title, description, tags, reportedByName, token)).data
+            return (await createCaseAction(title, description, tags, reportedByName, country, token)).data
         } catch (error: any) {
             throw new Error(error.response.data.error ? error.response.data.error : error)
         }

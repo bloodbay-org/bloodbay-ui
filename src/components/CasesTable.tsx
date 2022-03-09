@@ -1,6 +1,7 @@
 import React from 'react';
 import {Spin, Table, Tag} from 'antd';
 import {CaseType} from "../reducers/caseReducer";
+import {countryMap, getCountryByCode} from "../utils/localityUtils";
 
 export interface CasesTableProps {
     cases: CaseType[],
@@ -21,6 +22,12 @@ export function CasesTable(props: CasesTableProps) {
             dataIndex: 'tags',
             key: 'tags',
             render: (tags: string[]) => tags ? tags.map((tag, index) => <Tag key={index}>{tag}</Tag>) : <div/>,
+        },
+        {
+            title: 'Country',
+            dataIndex: 'country',
+            key: 'country',
+            render: (countryCode: string) => <span>{getCountryByCode(countryCode)}</span>,
         },
         {
             title: 'Reported by',
