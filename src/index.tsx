@@ -54,7 +54,7 @@ ReactDOM.render(
                 <Layout>
                     <AppHeader/>
                     <AppSetup/>
-                    <Content style={{padding: '50px 50px', height: 800, overflowY: 'scroll'}}>
+                    <Content style={{padding: '50px 50px', height: 800, overflowY: 'auto'}}>
                         <Routes>
                             <Route path="/" element={<App/>}/>
                             <Route path="/verify/:verificationToken" element={<Verify/>}/>
